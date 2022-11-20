@@ -24,7 +24,9 @@ color_image = pygame.image.load("color.png")
 begin = True
 start_game = False
 color = False
-best_result = 0
+f2 = open('result.txt')
+best_result = int(f2.readline()[::-1])
+f2.close()
 
 
 # Цикл игры
@@ -66,7 +68,10 @@ def game(snake_speed, color_of_snake):
                 print_gameover = pygame.font.Font(None, 70)
                 result = print_gameover.render('Game over', True, (180, 0, 180))
                 print_best_result = pygame.font.Font(None, 49)
-                best_result_screen = print_best_result.render('Best Result: ' + str(best_result), True, (0, 128, 128))
+                f1 = open('result.txt')
+                k = f1.readline()[::-1]
+                best_result_screen = print_best_result.render('Best Result: ' + k, True, (0, 128, 128))
+                f1.close()
                 print_score = pygame.font.Font(None, 49)
                 score_screen = print_score.render('Your result: ' + str(score), True, (200, 200, 200))
                 screenMain.blit(best_result_screen, (299, 10))
@@ -221,6 +226,9 @@ def game(snake_speed, color_of_snake):
             k = random.randrange(0, 21)
             if score > best_result:
                 best_result = score
+                f = open('result.txt','w')
+                f.write(str(best_result))
+                f.close()
 
         clock.tick(snake_speed)
         # Выход из игры:
